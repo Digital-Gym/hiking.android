@@ -33,8 +33,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.example.hikingwarehouse.R
 
 
 @Composable
@@ -44,10 +46,14 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
 
     when (viewModel.addProductUiState) {
         is AddProductUiState.Success -> {
-            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                stringResource(R.string.success),
+                Toast.LENGTH_SHORT
+            ).show()
         }
         is AddProductUiState.Error -> {
-            Toast.makeText(context, "An error occurred", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, stringResource(R.string.error), Toast.LENGTH_SHORT).show()
         }
         else -> {}
     }
@@ -63,7 +69,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
         OutlinedTextField(
             value = viewModel.name,
             onValueChange = viewModel::onNameChanged,
-            label = { Text("Product name") },
+            label = { Text(stringResource(R.string.product_name)) },
             isError = viewModel.nameError.value != null,
             modifier = Modifier.fillMaxWidth()
         )
@@ -72,7 +78,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
         Spacer(Modifier.height(8.dp))
 
         DropdownField(
-            "Category",
+            stringResource(R.string.category),
             remember { mutableStateOf(viewModel.category) },
             viewModel.categories,
             onValueChange = viewModel::onCategoryChanged,
@@ -82,7 +88,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
         }
 
         DropdownField(
-            "Brand",
+            stringResource(R.string.brand),
             remember { mutableStateOf(viewModel.brand) },
             viewModel.brands,
             onValueChange = viewModel::onBrandChanged,
@@ -95,7 +101,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
             OutlinedTextField(
                 value = viewModel.price,
                 onValueChange = viewModel::onPriceChanged,
-                label = { Text("Price") },
+                label = { Text(stringResource(R.string.price)) },
                 modifier = Modifier.weight(1f),
                 isError = viewModel.priceError.value != null,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -104,7 +110,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
             OutlinedTextField(
                 value = viewModel.quantity,
                 onValueChange = viewModel::onQuantityChanged,
-                label = { Text("Quantity") },
+                label = { Text(stringResource(R.string.quantity)) },
                 modifier = Modifier.weight(1f),
                 isError = viewModel.quantityError.value != null,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
@@ -116,7 +122,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
         Spacer(Modifier.height(8.dp))
 
         DropdownField(
-            "Color",
+            stringResource(R.string.color),
             remember { mutableStateOf(viewModel.color) },
             viewModel.colors,
         ) {
@@ -124,7 +130,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
         }
 
         DropdownField(
-            "Size",
+            stringResource(R.string.size),
             remember { mutableStateOf(viewModel.size) },
             viewModel.sizes
         ) {
@@ -133,18 +139,18 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(checked = viewModel.waterproof, onCheckedChange = { viewModel.waterproof = it })
-            Text("Waterproof")
+            Text(stringResource(R.string.waterproof))
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(checked = viewModel.uvResistant, onCheckedChange = { viewModel.uvResistant = it })
-            Text("UV-resistant")
+            Text(stringResource(R.string.uv_resistant))
         }
 
         OutlinedTextField(
             value = viewModel.comments,
             onValueChange = viewModel::onCommentsChanged,
-            label = { Text("Comments (optional)") },
+            label = { Text(stringResource(R.string.comments)) },
             isError = viewModel.commentsError.value != null,
             modifier = Modifier.fillMaxWidth()
         )
@@ -156,7 +162,7 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
             enabled = formValid && viewModel.addProductUiState !is AddProductUiState.Loading,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text("Confirm")
+            Text(stringResource(R.string.confirm))
         }
     }
 }

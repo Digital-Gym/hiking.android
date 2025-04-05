@@ -1,5 +1,6 @@
 package com.example.hikingwarehouse.data
 
+import com.example.hikingwarehouse.model.ItemResponse
 import com.example.hikingwarehouse.model.ProductItem
 import com.example.hikingwarehouse.model.StatusResponse
 import com.example.hikingwarehouse.network.HikingApi
@@ -19,6 +20,9 @@ interface HikingRepository {
         uvResistant: Boolean,
         comments: String?
     ): StatusResponse
+    suspend fun getItemById(id: String): ItemResponse
+    suspend fun updateItemById(item: ItemResponse): StatusResponse
+    suspend fun deleteItemById(id: String): StatusResponse
 }
 
 class NetworkHikingRepository:HikingRepository {
@@ -76,5 +80,17 @@ class NetworkHikingRepository:HikingRepository {
         )
 
         return HikingApi.retrofitService.addItem(productItem)
+    }
+
+    override suspend fun getItemById(id: String): ItemResponse {
+        return HikingApi.retrofitService.getItemById(id.toInt()).data
+    }
+
+    override suspend fun updateItemById(item: ItemResponse): StatusResponse {
+        return HikingApi.retrofitService.updateItemById(item.id, item)
+    }
+
+    override suspend fun deleteItemById(id: String): StatusResponse {
+        return HikingApi.retrofitService.deleteById(id.toInt())
     }
 }

@@ -15,7 +15,10 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
 
 private const val BASE_URL = "https://wiutmadcw.uz/api/v1/"
 private const val STUDENT_ID = "00015641"
@@ -65,4 +68,13 @@ interface HikingApiService {
 
     @POST("records")
     suspend fun addItem(@Body item: ProductItem): StatusResponse
+
+    @GET("records/{id}")
+    suspend fun getItemById(@Path("id") id: Int): BaseResponse<ItemResponse>
+
+    @PUT("records/{id}")
+    suspend fun updateItemById(@Path("id") id: Int, @Body item: ItemResponse): StatusResponse
+
+    @DELETE("records/{id}")
+    suspend fun deleteById(@Path("id") id: Int): StatusResponse
 }

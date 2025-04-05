@@ -13,6 +13,7 @@ import com.example.hikingwarehouse.ui.screens.AddProductViewModel
 import com.example.hikingwarehouse.ui.screens.HomeScreen
 import com.example.hikingwarehouse.ui.screens.HomeViewModel
 import com.example.hikingwarehouse.ui.screens.ProductCardScreen
+import com.example.hikingwarehouse.ui.screens.ProductCardViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -40,13 +41,19 @@ fun NavigationHost(modifier: Modifier){
 
         composable<ProductCardRoute> {
             val args = it.toRoute<ProductCardRoute>()
+            val productViewModel: ProductCardViewModel = viewModel()
+            productViewModel.id = args.id
+            productViewModel.getProduct()
 
             BaseLayout(
                 title="Product card",
                 showBack = true,
                 onBack = { navController.popBackStack() }
             ) {
-                ProductCardScreen(modifier, args.id)
+                ProductCardScreen(
+                    modifier,
+                    productViewModel
+                )
             }
         }
 

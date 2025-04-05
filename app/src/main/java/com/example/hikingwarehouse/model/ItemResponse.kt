@@ -51,7 +51,7 @@ data class ItemResponse(
     val anotherDate: String? = null,
 
     @SerialName("integer_one")
-    val quantity: String? = null,
+    var quantity: String? = null,
 
     @SerialName("integer_two")
     val waterproof: String? = null,

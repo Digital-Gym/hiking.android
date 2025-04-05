@@ -97,8 +97,8 @@ fun ProductListScreen(
                     modifier = Modifier
                         .weight(1f)
                         .padding(16.dp),
-                    label = { Text("Search") },
-                    placeholder = { Text("Search products...") },
+                    label = { Text(stringResource(R.string.search)) },
+                    placeholder = { Text(stringResource(R.string.search_products)) },
                     leadingIcon = {
                         Icon(Icons.Filled.Search, contentDescription = "Search Icon")
                     },
@@ -106,7 +106,7 @@ fun ProductListScreen(
                 )
 
                 Button(onClick = {onRefreshClicked()}) {
-                    Icon(Icons.Filled.Refresh, contentDescription = "Refresh page" )
+                    Icon(Icons.Filled.Refresh, contentDescription = stringResource(R.string.refresh) )
                 }
             }
         },
@@ -115,7 +115,7 @@ fun ProductListScreen(
                 onClick = onAddProduct,
                 shape = MaterialTheme.shapes.medium,
             ) {
-                Icon(Icons.Filled.Add, contentDescription = "Add Product")
+                Icon(Icons.Filled.Add, contentDescription = stringResource(R.string.add_product))
             }
         },
         floatingActionButtonPosition = FabPosition.End
@@ -130,7 +130,7 @@ fun ProductListScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    if (searchQuery.isBlank()) "No products available." else "No products found for \"$searchQuery\"",
+                    if (searchQuery.isBlank()) stringResource(R.string.no_products_available) else "${stringResource(R.string.no_products_found)} \"$searchQuery\"",
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -180,7 +180,7 @@ fun ErrorScreen(modifier: Modifier = Modifier, onRefreshClicked: () -> Unit) {
             modifier = Modifier.padding(16.dp),
             onClick = {onRefreshClicked()},
         ) {
-            Text("Refresh")
+            Text(stringResource(R.string.refresh))
         }
     }
 }
