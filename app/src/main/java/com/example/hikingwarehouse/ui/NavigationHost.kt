@@ -21,7 +21,7 @@ fun NavigationHost(modifier: Modifier){
 
     NavHost(
         navController = navController,
-        startDestination = AddProductRoute
+        startDestination = HomeRoute
     ) {
         composable<HomeRoute> {
             val homeViewModel: HomeViewModel = viewModel()

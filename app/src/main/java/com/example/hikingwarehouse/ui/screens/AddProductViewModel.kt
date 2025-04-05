@@ -2,10 +2,25 @@ package com.example.hikingwarehouse.ui.screens
 
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.hikingwarehouse.data.NetworkHikingRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+
+sealed interface AddProductUiState {
+    data class Success(val message: String) : AddProductUiState
+    data object Error : AddProductUiState
+    data object Loading : AddProductUiState
+    data object Idle: AddProductUiState
+}
+
 
 class AddProductViewModel : ViewModel() {
+    var addProductUiState: AddProductUiState by mutableStateOf(AddProductUiState.Idle)
+        private set
+
     // Fields
     var name by mutableStateOf("")
     var category by mutableStateOf("Hiking")
@@ -45,6 +60,18 @@ class AddProductViewModel : ViewModel() {
 
     private val _formValid = MutableStateFlow(false)
     val formValid: StateFlow<Boolean> = _formValid
+    private fun resetForm(){
+        name = ""
+        category = "Hiking"
+        brand = "The North Face"
+        price = ""
+        quantity = ""
+        color = ""
+        size = ""
+        waterproof = false
+        uvResistant = false
+        comments = ""
+    }
 
     private fun validateField(
         fieldName: String,
@@ -175,5 +202,22 @@ class AddProductViewModel : ViewModel() {
 
     fun onSubmit() {
         println("Submitting: $name, $category, $price, etc.")
+
+        viewModelScope.launch {
+            addProductUiState = AddProductUiState.Loading
+            addProductUiState = try {
+                val hikingRepository = NetworkHikingRepository()
+                val results = hikingRepository.addItem(
+                    name, category, brand, price, quantity, color, size, waterproof, uvResistant, comments
+                )
+
+                resetForm()
+
+                AddProductUiState.Success(results.message)
+            } catch (e: Exception){
+                println("[Error bro!] $e")
+                AddProductUiState.Error
+            }
+        }
     }
 }

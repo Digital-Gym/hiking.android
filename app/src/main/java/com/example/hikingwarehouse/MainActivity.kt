@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.hikingwarehouse.ui.NavigationHost
-import com.example.hikingwarehouse.ui.screens.HomeScreen
 import com.example.hikingwarehouse.ui.theme.HikingWarehouseTheme
 
 class MainActivity : ComponentActivity() {

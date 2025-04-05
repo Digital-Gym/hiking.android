@@ -9,3 +9,10 @@ open class BaseResponse<T>(
     val message: String,
     val data: T
 )
+
+@Serializable
+open class StatusResponse(
+    val code: Int,
+    val status: String,
+    val message: String,
+)

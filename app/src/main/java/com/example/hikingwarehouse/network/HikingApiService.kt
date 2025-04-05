@@ -2,6 +2,8 @@ package com.example.hikingwarehouse.network
 
 import com.example.hikingwarehouse.model.BaseResponse
 import com.example.hikingwarehouse.model.ItemResponse
+import com.example.hikingwarehouse.model.ProductItem
+import com.example.hikingwarehouse.model.StatusResponse
 import retrofit2.Retrofit
 import retrofit2.http.GET
 
@@ -12,6 +14,8 @@ import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 private const val BASE_URL = "https://wiutmadcw.uz/api/v1/"
 private const val STUDENT_ID = "00015641"
@@ -58,4 +62,7 @@ object HikingApi {
 interface HikingApiService {
     @GET("records/all")
     suspend fun getAllItems(): BaseResponse<List<ItemResponse>>
+
+    @POST("records")
+    suspend fun addItem(@Body item: ProductItem): StatusResponse
 }
