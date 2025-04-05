@@ -18,13 +18,19 @@ import com.example.hikingwarehouse.R
 
 
 @Composable
-fun HomeScreen(modifier: Modifier, homeUiState: HomeUiState, onCardOpen: (String) -> Unit){
+fun HomeScreen(
+    modifier: Modifier,
+    homeUiState: HomeUiState,
+    onCardOpen: (String) -> Unit,
+    onAddProduct: () -> Unit
+){
 
     when (homeUiState){
         is HomeUiState.Success ->
             ResultScreen(
                 homeUiState.items,
-                onCardOpen = onCardOpen
+                onCardOpen = onCardOpen,
+                onAddProduct = onAddProduct
             )
         is HomeUiState.Error ->
             ErrorScreen(modifier = modifier.fillMaxSize())
@@ -34,10 +40,15 @@ fun HomeScreen(modifier: Modifier, homeUiState: HomeUiState, onCardOpen: (String
 }
 
 @Composable
-fun ResultScreen(photos: String, modifier: Modifier = Modifier, onCardOpen: (String) -> Unit) {
+fun ResultScreen(
+    items: String,
+    modifier: Modifier = Modifier,
+    onCardOpen: (String) -> Unit,
+    onAddProduct: () -> Unit
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        modifier = modifier.padding(top = 32.dp, start = 16.dp, end=16.dp)
     ) {
         Button(
             onClick = { onCardOpen("66") }
@@ -45,7 +56,13 @@ fun ResultScreen(photos: String, modifier: Modifier = Modifier, onCardOpen: (Str
             Text("Go to next")
         }
 
-        Text(text = photos)
+        Button(
+            onClick = { onAddProduct() }
+        ) {
+            Text("Go to next")
+        }
+
+        Text(text = items)
     }
 }
 

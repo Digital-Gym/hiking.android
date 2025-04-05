@@ -1,5 +1,6 @@
 package com.example.hikingwarehouse.ui
 
+import com.example.hikingwarehouse.ui.screens.AddProductScreen
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -7,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.example.hikingwarehouse.ui.layouts.BaseLayout
+import com.example.hikingwarehouse.ui.screens.AddProductViewModel
 import com.example.hikingwarehouse.ui.screens.HomeScreen
 import com.example.hikingwarehouse.ui.screens.HomeViewModel
 import com.example.hikingwarehouse.ui.screens.ProductCardScreen
@@ -18,21 +21,42 @@ fun NavigationHost(modifier: Modifier){
 
     NavHost(
         navController = navController,
-        startDestination = HomeRoute
+        startDestination = AddProductRoute
     ) {
         composable<HomeRoute> {
             val homeViewModel: HomeViewModel = viewModel()
 
-            HomeScreen(modifier, homeViewModel.homeUiState) { cardId: String ->
+            HomeScreen(modifier, homeViewModel.homeUiState, { cardId: String ->
                 navController.navigate(
                     ProductCardRoute(id = cardId)
                 )
+            }){
+                navController.navigate(AddProductRoute)
             }
         }
 
         composable<ProductCardRoute> {
             val args = it.toRoute<ProductCardRoute>()
-            ProductCardScreen(modifier, args.id)
+
+            BaseLayout(
+                title="Product card",
+                showBack = true,
+                onBack = { navController.popBackStack() }
+            ) {
+                ProductCardScreen(modifier, args.id)
+            }
+        }
+
+        composable<AddProductRoute> {
+            val addViewModel: AddProductViewModel = viewModel()
+
+            BaseLayout(
+                title="Add product",
+                showBack = true,
+                onBack = { navController.popBackStack() }
+            ) {
+                AddProductScreen(addViewModel)
+            }
         }
     }
 }
@@ -45,3 +69,6 @@ object HomeRoute
 data class ProductCardRoute(
     val id: String
 )
+
+@Serializable
+object AddProductRoute
