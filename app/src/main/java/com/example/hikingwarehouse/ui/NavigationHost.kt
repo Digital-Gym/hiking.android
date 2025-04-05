@@ -30,7 +30,10 @@ fun NavigationHost(modifier: Modifier){
                 navController.navigate(
                     ProductCardRoute(id = cardId)
                 )
-            }){
+            }, {
+                homeViewModel.getHomeItems()
+            }
+            ){
                 navController.navigate(AddProductRoute)
             }
         }

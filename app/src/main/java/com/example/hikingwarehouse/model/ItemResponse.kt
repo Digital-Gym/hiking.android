@@ -18,10 +18,10 @@ data class ItemResponse(
     val comments: String? = null,
 
     @SerialName("phone")
-    val category: String? = null,
+    val category: String,
 
     @SerialName("url")
-    val brand: String? = null,
+    val brand: String,
 
     @SerialName("age")
     val age: Int? = null,
@@ -39,7 +39,7 @@ data class ItemResponse(
     val unusedSize: String? = null,
 
     @SerialName("price")
-    val price: Double? = null,
+    val price: Double,
 
     @SerialName("type")
     val size: String? = null,

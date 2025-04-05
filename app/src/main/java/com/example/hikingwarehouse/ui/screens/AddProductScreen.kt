@@ -153,8 +153,8 @@ fun AddProductScreen(viewModel: AddProductViewModel) {
 
         Button (
             onClick = { viewModel.onSubmit() },
-            enabled = formValid,
-            modifier = Modifier.fillMaxWidth()
+            enabled = formValid && viewModel.addProductUiState !is AddProductUiState.Loading,
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Confirm")
         }

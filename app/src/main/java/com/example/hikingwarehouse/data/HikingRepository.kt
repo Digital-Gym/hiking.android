@@ -1,13 +1,12 @@
 package com.example.hikingwarehouse.data
 
-import com.example.hikingwarehouse.model.ItemResponse
 import com.example.hikingwarehouse.model.ProductItem
 import com.example.hikingwarehouse.model.StatusResponse
 import com.example.hikingwarehouse.network.HikingApi
 
 
 interface HikingRepository {
-    suspend fun getAllItems(): List<ItemResponse>
+    suspend fun getAllItems(): List<ProductItem>
     suspend fun addItem(
         name: String,
         category: String,
@@ -22,9 +21,25 @@ interface HikingRepository {
     ): StatusResponse
 }
 
-class NetworkHikingRepository():HikingRepository {
-    override suspend fun getAllItems(): List<ItemResponse> {
-        return HikingApi.retrofitService.getAllItems().data
+class NetworkHikingRepository:HikingRepository {
+    override suspend fun getAllItems(): List<ProductItem> {
+        val responseItem = HikingApi.retrofitService.getAllItems().data
+
+        return responseItem.map { item ->
+            ProductItem(
+                id = item.id,
+                name = item.name,
+                category = item.category,
+                brand = item.brand,
+                price = item.price,
+                quantity = item.quantity?.toInt() ?: 0,
+                color = item.color ?: "",
+                size = item.size ?: "",
+                waterproof = item.waterproof?.toInt() ?: 0,
+                uvResistant = item.uvResistant?.toInt() ?: 0,
+                comments = item.comments ?: ""
+            )
+        }
     }
 
     override suspend fun addItem(

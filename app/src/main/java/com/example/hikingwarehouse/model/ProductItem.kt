@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ProductItem (
+    val id: Int? = null,
     @SerialName("title")
     val name: String,
     @SerialName("phone")

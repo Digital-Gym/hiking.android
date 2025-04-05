@@ -7,11 +7,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hikingwarehouse.data.NetworkHikingRepository
+import com.example.hikingwarehouse.model.ProductItem
 import kotlinx.coroutines.launch
 
 
 sealed interface HomeUiState {
-    data class Success(val items: String) : HomeUiState
+    data class Success(val items: List<ProductItem>) : HomeUiState
     data object Error : HomeUiState
     data object Loading : HomeUiState
 }
@@ -24,15 +25,13 @@ class HomeViewModel: ViewModel() {
         getHomeItems()
     }
 
-    private fun getHomeItems() {
+    fun getHomeItems() {
         viewModelScope.launch {
             homeUiState = try {
                 val hikingRepository = NetworkHikingRepository()
                 val results = hikingRepository.getAllItems()
 
-                HomeUiState.Success(
-                    "Success: ${results.size} items received"
-                )
+                HomeUiState.Success(results)
             } catch (e: Exception){
                 Log.e("MyTag", "Error occurred: ${e.message}", e)
                 HomeUiState.Error
