@@ -3,7 +3,7 @@
     <string name="app_title">Hiking Warehouse</string>
     <string name="loading_failed">Failed to load</string>
     <string name="loading">Loading</string>
-    <string name="success">Loading</string>
+    <string name="success">Success!</string>
     <string name="error">An error occurred</string>
 
 
